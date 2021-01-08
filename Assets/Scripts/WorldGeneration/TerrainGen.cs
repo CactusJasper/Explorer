@@ -9,6 +9,7 @@ public class TerrainGen : MonoBehaviour
 
     public Tile stoneBarrierTile;
     public Tile tier1StoneBarrierTile;
+    public Tile tier2StoneBarrierTile;
 
     public Tile grassTile;
     public Tile stoneTile;
@@ -49,6 +50,14 @@ public class TerrainGen : MonoBehaviour
                 {
                     tilemap.SetTile(new Vector3Int(x, -y, 0), ironOreTile);
                 }
+                else if(map[x, y] == 5)
+                {
+                    tilemap.SetTile(new Vector3Int(x, -y, 0), copperOreTile);
+                }
+                else if(map[x, y] == 6)
+                {
+                    tilemap.SetTile(new Vector3Int(x, -y, 0), silverOreTile);
+                }
                 else if(map[x, y] == 501)
                 {
                     tilemap.SetTile(new Vector3Int(x, -y, 0), stoneBarrierTile);
@@ -56,6 +65,10 @@ public class TerrainGen : MonoBehaviour
                 else if(map[x, y] == 502)
                 {
                     tilemap.SetTile(new Vector3Int(x, -y, 0), tier1StoneBarrierTile);
+                }
+                else if(map[x, y] == 503)
+                {
+                    tilemap.SetTile(new Vector3Int(x, -y, 0), tier2StoneBarrierTile);
                 }
                 else
                 {
@@ -159,6 +172,110 @@ public class TerrainGen : MonoBehaviour
                     else if(y == 51 || y == 52 || y == 53)
                     {
                         map[x, y] = 502; // Stone Barrier Tier 1 Tile
+                    }
+                    else if(y > 53 && y <= 110)
+                    {
+                        if(Random.Range(0, 100) > 70)
+                        {
+                            if(Random.Range(0, 100) > 80)
+                            {
+                                map[x, y] = 4; // Iron Ore Tile
+                            }
+                            else
+                            {
+                                if(y < 75)
+                                {
+                                    map[x, y] = 3; // Coal Ore Tile
+                                }
+                                else
+                                {
+                                    if(Random.Range(0, 100) > 60)
+                                    {
+                                        map[x, y] = 4; // Iron Ore Tile
+                                    }
+                                    else
+                                    {
+                                        map[x, y] = 2; // Stone Tile
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if(y > 75)
+                            {
+                                if(y > 95)
+                                { 
+                                    if(Random.Range(0, 100) > 50)
+                                    {
+                                        if(Random.Range(0, 100) > 85)
+                                        {
+                                            map[x, y] = 5; // Copper Ore Tile
+                                        }
+                                        else
+                                        {
+                                            map[x, y] = 2; // Stone Tile
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if(Random.Range(0, 100) > 93)
+                                        {
+                                            map[x, y] = 6; // Silver Ore Tile
+                                        }
+                                        else
+                                        {
+                                            map[x, y] = 2; // Stone Tile
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if(Random.Range(0, 100) > 85)
+                                    {
+                                        map[x, y] = 5; // Copper Ore Tile
+                                    }
+                                    else
+                                    {
+                                        map[x, y] = 2; // Stone Tile
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                map[x, y] = 2; // Stone Tile
+                            }
+                        }
+                    }
+                    else if(y == 111)
+                    {
+                        if(Random.Range(0, 100) > 50)
+                        {
+                            map[x, y] = 503; // Tier 2 Stone Barrier Tile
+                        }
+                        else
+                        {
+                            map[x, y] = 2; // Stone Tile
+                        }
+                    }
+                    else if(y == 112)
+                    {
+                        map[x, y] = 503; // Tier 2 Stone Barrier Tile
+                    }
+                    else if (y == 113)
+                    {
+                        map[x, y] = 503; // Tier 2 Stone Barrier Tile
+                    }
+                    else if(y == 114)
+                    {
+                        if (Random.Range(0, 100) > 50)
+                        {
+                            map[x, y] = 503; // Tier 2 Stone Barrier Tile
+                        }
+                        else
+                        {
+                            map[x, y] = 2; // Stone Tile
+                        }
                     }
                     else
                     {

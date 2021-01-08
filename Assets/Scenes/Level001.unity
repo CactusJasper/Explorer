@@ -168,6 +168,8 @@ MonoBehaviour:
   stoneBarrierTile: {fileID: 11400000, guid: a31d56b2de0dac34c8aaf078b70bddf7, type: 2}
   tier1StoneBarrierTile: {fileID: 11400000, guid: 3a17d359d9fc64549b278b9b6dc3f741,
     type: 2}
+  tier2StoneBarrierTile: {fileID: 11400000, guid: df1f8c2ba5f1d7c4eafa498d21c04527,
+    type: 2}
   grassTile: {fileID: 11400000, guid: bac918bc11100e84ea6fba70fb3c1cd1, type: 2}
   stoneTile: {fileID: 11400000, guid: 3e50dc97832e5134184b6ce2a993ec73, type: 2}
   coalOreTile: {fileID: 11400000, guid: 0a1c3c657035d964fa273dce7bdfd30c, type: 2}
