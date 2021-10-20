@@ -1,13 +1,17 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class TerrainGen : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject player;
     public Tilemap miningMap;
     public Tilemap mineBgMap;
+    public Tilemap upperMap;
 
+    public Tile airBarrierTile;
     public Tile stoneBarrierTile;
     public Tile tier1StoneBarrierTile;
     public Tile tier2StoneBarrierTile;
@@ -19,13 +23,13 @@ public class TerrainGen : MonoBehaviour
     public Tile tier8StoneBarrierTile;
     public Tile tier9StoneBarrierTile;
 
-    public Tile grassTile;
-    public Tile stoneTile;
-    public Tile coalOreTile;
-    public Tile ironOreTile;
-    public Tile copperOreTile;
-    public Tile silverOreTile;
-    public Tile goldOreTile;
+    public MineTile grassTile;
+    public MineTile stoneTile;
+    public MineTile coalOreTile;
+    public MineTile ironOreTile;
+    public MineTile copperOreTile;
+    public MineTile silverOreTile;
+    public MineTile goldOreTile;
     public Tile aluminiumOreTile;
     public Tile cobaltOreTile;
     public Tile uraniumOreTile;
@@ -38,14 +42,87 @@ public class TerrainGen : MonoBehaviour
     public Tile amberOreTile;
     public Tile topazOreTile;
 
-    private int width = 64 * 6;
+    private int width = 70;//64 * 2;
     private int height = 1200;
     private int[,] mineMap;
 
     private void Awake()
     {
+        StartCoroutine("InitalLoadWorld");
+    }
+
+    private IEnumerator InitalLoadWorld()
+    {
+        Stopwatch stopwatch = new Stopwatch();
+
+        stopwatch.Start();
         mineMap = GenerateArray(true);
+        stopwatch.Stop();
+        UnityEngine.Debug.Log($"Map Array Generation took {stopwatch.ElapsedMilliseconds}ms");
+
+        stopwatch.Reset();
+
+        stopwatch.Start();
         GenerateMineLevel(mineMap, miningMap, mineBgMap);
+        stopwatch.Stop();
+        UnityEngine.Debug.Log($"Map Generation took {stopwatch.ElapsedMilliseconds}ms");
+        stopwatch.Reset();
+
+        stopwatch.Start();
+        GenerateUpperMap();
+        stopwatch.Stop();
+        UnityEngine.Debug.Log($"Upper Map Generation took {stopwatch.ElapsedMilliseconds}ms");
+        stopwatch.Reset();
+
+        //yield return new WaitForEndOfFrame();
+        //stopwatch.Start();
+        //miningMap.gameObject.GetComponent<CompositeCollider2D>().GenerateGeometry();
+        //stopwatch.Stop();
+        //yield return new WaitForEndOfFrame();
+
+        player.SetActive(true);
+
+        //UnityEngine.Debug.Log($"Colider Generation took {stopwatch.ElapsedMilliseconds}ms");
+        yield return new WaitForSecondsRealtime(0.01F);
+
+        throw new System.Exception("Update to new MineTile Asset to allow for the ming system to take advantage of tile type id's");
+    }
+
+    public int GetTileId(Vector3Int position)
+    {
+        if(typeof(MineTile).IsInstanceOfType(miningMap.GetTile(position)))
+        {
+            MineTile tile = (MineTile)miningMap.GetTile(position);
+            return tile.GetTileId();
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    private void GenerateUpperMap()
+    {
+        int[,] map = new int[width, height];
+
+        for(int x = 0; x < width; x++)
+        {
+            for(int y = 0; y <= 50; y++)
+            {
+                if(x == map.GetLowerBound(0))
+                {
+                    upperMap.SetTile(new Vector3Int(x, y, 0), airBarrierTile);
+                }
+                else if(x == map.GetUpperBound(0))
+                {
+                    upperMap.SetTile(new Vector3Int(x, y, 0), airBarrierTile);
+                }
+                else if(y == 50)
+                {
+                    upperMap.SetTile(new Vector3Int(x, y, 0), airBarrierTile);
+                }
+            }
+        }
     }
 
     private void GenerateMineLevel(int[,] map, Tilemap tilemap, Tilemap bgmap)
@@ -92,159 +169,241 @@ public class TerrainGen : MonoBehaviour
          * 509 = Stone Barrier Tier 8 Tile
          * 510 = Stone Barrier Tier 9 Tile
          */
-        for (int x = 0; x < width; x++)
+        Vector3Int[,] positions = new Vector3Int[width, height];
+        Vector3Int[,] bgPositions = new Vector3Int[width, height];
+        Tile[,] tiles = new Tile[width, height];
+        Tile[,] bgTiles = new Tile[width, height];
+
+        for(int x = 0; x < width; x++)
         {
             for(int y = 0; y < height; y++)
             {
                 if(map[x, y] == 1)
                 {
-                    tilemap.SetTile(new Vector3Int(x, y, 0), grassTile);
-                    bgmap.SetTile(new Vector3Int(x, y, 0), grassTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = bgTiles[x, y] = grassTile;
+                    //tilemap.SetTile(new Vector3Int(x, y, 0), grassTile);
+                    //bgmap.SetTile(new Vector3Int(x, y, 0), grassTile);
                 }
                 else if(map[x, y] == 2)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if(map[x, y] == 3)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), coalOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = coalOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), coalOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if(map[x, y] == 4)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), ironOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = ironOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), ironOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if(map[x, y] == 5)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), copperOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = copperOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), copperOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if(map[x, y] == 6)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), silverOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = silverOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), silverOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if(map[x, y] == 7)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), goldOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = goldOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), goldOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if (map[x, y] == 8)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), aluminiumOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = aluminiumOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), aluminiumOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if (map[x, y] == 9)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), cobaltOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = cobaltOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), cobaltOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if (map[x, y] == 10)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), uraniumOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = uraniumOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), uraniumOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if (map[x, y] == 11)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), diamondOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = diamondOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), diamondOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if (map[x, y] == 12)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), strontiumOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = strontiumOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), strontiumOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if (map[x, y] == 13)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), rubyOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = rubyOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), rubyOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if (map[x, y] == 14)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), quartzOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = quartzOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), quartzOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if (map[x, y] == 15)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), sapphireOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = sapphireOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), sapphireOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if (map[x, y] == 16)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), jasperJadeOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = jasperJadeOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), jasperJadeOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if (map[x, y] == 17)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), amberOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = amberOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), amberOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if (map[x, y] == 18)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), topazOreTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = topazOreTile;
+                    bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), topazOreTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
                 else if(map[x, y] == 501)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), stoneBarrierTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneBarrierTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = bgTiles[x, y] = stoneBarrierTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), stoneBarrierTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneBarrierTile);
                 }
                 else if(map[x, y] == 502)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), tier1StoneBarrierTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), tier1StoneBarrierTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = bgTiles[x, y] = tier1StoneBarrierTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), tier1StoneBarrierTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), tier1StoneBarrierTile);
                 }
                 else if(map[x, y] == 503)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), tier2StoneBarrierTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), tier2StoneBarrierTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = bgTiles[x, y] = tier2StoneBarrierTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), tier2StoneBarrierTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), tier2StoneBarrierTile);
                 }
                 else if (map[x, y] == 504)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), tier3StoneBarrierTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), tier3StoneBarrierTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = bgTiles[x, y] = tier3StoneBarrierTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), tier3StoneBarrierTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), tier3StoneBarrierTile);
                 }
                 else if (map[x, y] == 505)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), tier4StoneBarrierTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), tier4StoneBarrierTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = bgTiles[x, y] = tier4StoneBarrierTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), tier4StoneBarrierTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), tier4StoneBarrierTile);
                 }
                 else if (map[x, y] == 506)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), tier5StoneBarrierTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), tier5StoneBarrierTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = bgTiles[x, y] = tier5StoneBarrierTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), tier5StoneBarrierTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), tier5StoneBarrierTile);
                 }
                 else if (map[x, y] == 507)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), tier6StoneBarrierTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), tier6StoneBarrierTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = bgTiles[x, y] = tier6StoneBarrierTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), tier6StoneBarrierTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), tier6StoneBarrierTile);
                 }
                 else if (map[x, y] == 508)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), tier7StoneBarrierTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), tier7StoneBarrierTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = bgTiles[x, y] = tier7StoneBarrierTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), tier7StoneBarrierTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), tier7StoneBarrierTile);
                 }
                 else if (map[x, y] == 509)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), tier8StoneBarrierTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), tier8StoneBarrierTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = bgTiles[x, y] = tier8StoneBarrierTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), tier8StoneBarrierTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), tier8StoneBarrierTile);
                 }
                 else if (map[x, y] == 510)
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), tier9StoneBarrierTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), tier9StoneBarrierTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = bgTiles[x, y] = tier9StoneBarrierTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), tier9StoneBarrierTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), tier9StoneBarrierTile);
                 }
                 else
                 {
-                    tilemap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
-                    bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    positions[x, y] = bgPositions[x, y] = new Vector3Int(x, -y, 0);
+                    tiles[x, y] = bgTiles[x, y] = stoneTile;
+                    //tilemap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
+                    //bgmap.SetTile(new Vector3Int(x, -y, 0), stoneTile);
                 }
             }
         }
-    }
 
+        tilemap.SetTiles(Vector3IntToArray(positions), TileToArray(tiles));
+        bgmap.SetTiles(Vector3IntToArray(bgPositions), TileToArray(bgTiles));
+    }
+    // TODO: Overhaul all the generation sizes(Map height is too large to have good load times) and add the rest of the ores
     private int[,] GenerateArray(bool mine)
     {
         int[,] map = new int[width, height];
@@ -299,7 +458,7 @@ public class TerrainGen : MonoBehaviour
                     {
                         map[x, y] = 501; // Stone Barrier
                     }
-                    else if (x == map.GetUpperBound(0))
+                    else if(x == map.GetUpperBound(0))
                     {
                         map[x, y] = 501; // Stone Barrier
                     }
@@ -610,5 +769,41 @@ public class TerrainGen : MonoBehaviour
         }
 
         return map;
+    }
+
+    // Convert a 2D Vector3Int array into a single 1D Vector3Int array for using SetTiles
+    private static Vector3Int[] Vector3IntToArray(Vector3Int[,] input)
+    {
+        int size = input.Length;
+        Vector3Int[] result = new Vector3Int[size];
+
+        int write = 0;
+        for (int i = 0; i <= input.GetUpperBound(0); i++)
+        {
+            for (int z = 0; z <= input.GetUpperBound(1); z++)
+            {
+                result[write++] = input[i, z];
+            }
+        }
+        
+        return result;
+    }
+
+    // Convert a 2D Tile array into a single 1D Tile array for using SetTiles
+    private static Tile[] TileToArray(Tile[,] input)
+    {
+        int size = input.Length;
+        Tile[] result = new Tile[size];
+
+        int write = 0;
+        for (int i = 0; i <= input.GetUpperBound(0); i++)
+        {
+            for (int z = 0; z <= input.GetUpperBound(1); z++)
+            {
+                result[write++] = input[i, z];
+            }
+        }
+        
+        return result;
     }
 }

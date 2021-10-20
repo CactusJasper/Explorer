@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
+  m_Name: RemoteConfigDataStoreAsset
+  m_EditorClassIdentifier: 
+  rsKeyList:
+  - metadata:
+      entityId: f813a6e5-0c23-45a9-9b9e-eb2e7172b706
+    rs:
+      key: playerSpeed
+      type: float
+      value: 3.18
+  - metadata:
+      entityId: c916a88f-71db-40d0-995d-ea1b93a2ba34
+    rs:
+      key: jumpForce
+      type: string
+      value: 187.4
+  rsLastCachedKeyList:
+  - metadata:
+      entityId: f813a6e5-0c23-45a9-9b9e-eb2e7172b706
+    rs:
+      key: playerSpeed
+      type: float
+      value: 3.180000
+  - metadata:
+      entityId: c916a88f-71db-40d0-995d-ea1b93a2ba34
+    rs:
+      key: jumpForce
+      type: string
+      value: 187.4
+  configId: 13da2b6a-5ff1-4ccc-a197-d347f1f4583c
+  currentEnvironmentId: bc2f1225-3776-4c3a-854c-5023815ec752
+  environments:
+  - id: f9746c78-356c-493a-9724-88ad8f40739a
+    appId: 
+    name: production (Default)
+    description: 
+    createdAt: 2021-10-17T17:18:14Z
+    updatedAt: 2021-10-17T17:18:14Z
+  - id: bc2f1225-3776-4c3a-854c-5023815ec752
+    appId: 
+    name: development
+    description: 
+    createdAt: 2021-10-19T23:03:52Z
+    updatedAt: 2021-10-19T23:03:52Z
+  rulesList: []
+  lastCachedRulesList: []
+  addedRulesIDs: []
+  updatedRulesIDs: []
+  deletedRulesIDs: []
