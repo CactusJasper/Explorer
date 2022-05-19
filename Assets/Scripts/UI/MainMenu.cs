@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Explorer.FileHandling;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -10,7 +11,7 @@ public class MainMenu : MonoBehaviour
     public TMP_Dropdown resolutionDropdown;
     private Resolution[] resolutions;
     private SaveManager saveManager;
-    // TODO: Look at PlayerPrefs for fixing the ui inconsitencies
+    // TODO: Look at PlayerPrefs for fixing the ui inconsistencies
     private void Start()
     {
         resolutions = Screen.resolutions;
@@ -70,7 +71,7 @@ public class MainMenu : MonoBehaviour
         audioMixer.SetFloat("MusicVolume", volume);
     }
 
-    public void SetSFXVolume(float volume)
+    public void SetSfxVolume(float volume)
     {
         audioMixer.SetFloat("SFXVolume", volume);
     }

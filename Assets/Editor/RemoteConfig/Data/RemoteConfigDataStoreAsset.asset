@@ -12,49 +12,111 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
   m_Name: RemoteConfigDataStoreAsset
   m_EditorClassIdentifier: 
-  rsKeyList:
-  - metadata:
-      entityId: f813a6e5-0c23-45a9-9b9e-eb2e7172b706
-    rs:
-      key: playerSpeed
-      type: float
-      value: 3.18
-  - metadata:
-      entityId: c916a88f-71db-40d0-995d-ea1b93a2ba34
-    rs:
-      key: jumpForce
-      type: string
-      value: 187.4
-  rsLastCachedKeyList:
-  - metadata:
-      entityId: f813a6e5-0c23-45a9-9b9e-eb2e7172b706
-    rs:
-      key: playerSpeed
-      type: float
-      value: 3.180000
-  - metadata:
-      entityId: c916a88f-71db-40d0-995d-ea1b93a2ba34
-    rs:
-      key: jumpForce
-      type: string
-      value: 187.4
-  configId: 13da2b6a-5ff1-4ccc-a197-d347f1f4583c
-  currentEnvironmentId: bc2f1225-3776-4c3a-854c-5023815ec752
-  environments:
-  - id: f9746c78-356c-493a-9724-88ad8f40739a
-    appId: 
-    name: production (Default)
-    description: 
-    createdAt: 2021-10-17T17:18:14Z
-    updatedAt: 2021-10-17T17:18:14Z
-  - id: bc2f1225-3776-4c3a-854c-5023815ec752
-    appId: 
-    name: development
-    description: 
-    createdAt: 2021-10-19T23:03:52Z
-    updatedAt: 2021-10-19T23:03:52Z
-  rulesList: []
-  lastCachedRulesList: []
-  addedRulesIDs: []
-  updatedRulesIDs: []
-  deletedRulesIDs: []
+  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"66dd1642-cd3e-4e0b-8106-306b46cdefce\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"coalOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 1.15\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"729b8619-6834-435f-8806-3aa9b95b7d49\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"grassMineTime\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 0.2\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"50054517-0f98-4b3f-9641-406da13f9e1f\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"stoneMineTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
+    0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"56e8aa95-f911-4b09-81b3-35c09a1a446d\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"ironOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 1.2\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"f6b0eade-0420-4ae3-90fc-a66e25ad87ca\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"copperOreMineTime\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 1.15\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"fc147eff-f51e-4d0a-954b-1b7ff88462bc\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"silverOreMineTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
+    1.05\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"03f2a50e-7e93-4ca2-bb14-c3ab925d751b\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"goldOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 1.6\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"11ee6d33-9649-4552-bbe8-46af5f54b92a\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"aluminiumOreMineTime\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 1.34\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"65cdede7-b062-4af6-977e-037d5e15aac9\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"cobaltOreMineTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
+    0.77\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"d54373e1-d8da-49d1-8ecc-4f475a8d25b4\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"uraniumOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 0.9\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"28bbdcd6-9aff-4013-9cf0-b0b521cfe4a9\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"mineTimeUpgradeModifier\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 0.06\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"76e3edd1-cfdf-4bb8-9232-85753aea66eb\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"diamondOreMineTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
+    1.1\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"7d0095a3-fa3a-4f52-9cb1-06078324462e\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"strontiumOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 1.34\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"1dc3b437-288b-4729-bf26-55bc631fea40\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"rubyOreMineTime\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"c75af05a-13f7-47c7-9a17-24a69a925d88\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"quartzOreMineTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
+    0.67\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"af3a5c2f-1b61-46da-b51c-fde7bbfffc6a\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"sapphireOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 0.98\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"89de1a8f-ecd5-4197-bc54-b5367b92c4e5\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"jasperJadeOreMineTime\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 1.6\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"186e9796-b44b-4566-b7b8-b13aee48d337\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"amberOreMineTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
+    1.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"8b056248-c43f-4788-92af-5b6b329e9c65\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"topazOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 1.34\r\n    }\r\n  }\r\n]"
+  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"66dd1642-cd3e-4e0b-8106-306b46cdefce\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"coalOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 1.15\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"729b8619-6834-435f-8806-3aa9b95b7d49\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"grassMineTime\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 0.2\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"50054517-0f98-4b3f-9641-406da13f9e1f\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"stoneMineTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
+    0.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"56e8aa95-f911-4b09-81b3-35c09a1a446d\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"ironOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 1.2\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"f6b0eade-0420-4ae3-90fc-a66e25ad87ca\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"copperOreMineTime\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 1.15\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"fc147eff-f51e-4d0a-954b-1b7ff88462bc\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"silverOreMineTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
+    1.05\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"03f2a50e-7e93-4ca2-bb14-c3ab925d751b\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"goldOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 1.6\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"11ee6d33-9649-4552-bbe8-46af5f54b92a\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"aluminiumOreMineTime\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 1.34\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"65cdede7-b062-4af6-977e-037d5e15aac9\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"cobaltOreMineTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
+    0.77\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"d54373e1-d8da-49d1-8ecc-4f475a8d25b4\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"uraniumOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 0.9\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"28bbdcd6-9aff-4013-9cf0-b0b521cfe4a9\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"mineTimeUpgradeModifier\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 0.06\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"76e3edd1-cfdf-4bb8-9232-85753aea66eb\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"diamondOreMineTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
+    1.1\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"7d0095a3-fa3a-4f52-9cb1-06078324462e\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"strontiumOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 1.34\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"1dc3b437-288b-4729-bf26-55bc631fea40\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"rubyOreMineTime\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 1.0\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"c75af05a-13f7-47c7-9a17-24a69a925d88\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"quartzOreMineTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
+    0.67\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"af3a5c2f-1b61-46da-b51c-fde7bbfffc6a\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"sapphireOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 0.98\r\n    }\r\n  },\r\n  {\r\n    \"metadata\":
+    {\r\n      \"entityId\": \"89de1a8f-ecd5-4197-bc54-b5367b92c4e5\"\r\n    },\r\n   
+    \"rs\": {\r\n      \"key\": \"jasperJadeOreMineTime\",\r\n      \"type\": \"float\",\r\n     
+    \"value\": 1.6\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\":
+    \"186e9796-b44b-4566-b7b8-b13aee48d337\"\r\n    },\r\n    \"rs\": {\r\n     
+    \"key\": \"amberOreMineTime\",\r\n      \"type\": \"float\",\r\n      \"value\":
+    1.5\r\n    }\r\n  },\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"8b056248-c43f-4788-92af-5b6b329e9c65\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"topazOreMineTime\",\r\n      \"type\":
+    \"float\",\r\n      \"value\": 1.34\r\n    }\r\n  }\r\n]"
+  _environments: "[\r\n  {\r\n    \"projectId\": \"1889d4e6-81a3-476e-ab19-91480a9a45cc\",\r\n   
+    \"name\": \"production\",\r\n    \"id\": \"f9746c78-356c-493a-9724-88ad8f40739a\",\r\n   
+    \"isDefault\": true,\r\n    \"createdAt\": \"2021-10-17T17:18:14Z\",\r\n    \"updatedAt\":
+    \"2021-10-17T17:18:14Z\"\r\n  }\r\n]"
+  _rulesList: '[]'
+  _lastCachedRulesList: '[]'

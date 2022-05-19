@@ -1,15 +1,31 @@
-﻿using UnityEngine;
+﻿using System.Globalization;
+using Explorer.Player;
+using UnityEngine;
 using TMPro;
 
-public class HUD : MonoBehaviour
-{
-    [SerializeField]
-    private TMP_Text balanceText;
-    [SerializeField]
-    private PlayerData playerData;
+namespace Explorer.UI {
+    public class HUD : MonoBehaviour {
+        [SerializeField]
+        private TMP_Text balanceText;
+        [SerializeField]
+        private TMP_Text inventoryUsageText;
+        [SerializeField]
+        private PlayerData playerData;
 
-    private void Update()
-    {
-        balanceText.text = $"£{string.Format("{0:n}", playerData.GetBalance())}";
+        private void Update() {
+            UpdateBalance();
+            UpdateInventoryUsage();
+        }
+
+        private void UpdateBalance() {
+            decimal balance = playerData.GetBalance();
+            CultureInfo cultureRef = new CultureInfo("en-GB");
+            balanceText.text = $"£{balance.ToString(cultureRef)}";
+        }
+
+        private void UpdateInventoryUsage() {
+            inventoryUsageText.text = $"{playerData.GetInventoryUsage()}/{playerData.GetCurrentInventorySize()}";
+        }
     }
 }
+

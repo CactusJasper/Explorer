@@ -1,39 +1,28 @@
 ﻿using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Explorer.Player;
 
-public static class SaveHandler
-{
-    // Rehaaul when save games are to be implmented
-    public static void SavePlayerData(PlayerData playerData)
-    {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = $"{Application.persistentDataPath}/data.explorer";
-        FileStream stream = new FileStream(path, FileMode.Create);
+namespace Explorer.FileHandling {
+    public static class SaveHandler {
+        // Overhaul when save games are to be implemented
+        public static void SavePlayerData(PlayerData playerData) {
+            BinaryFormatter formatter = new BinaryFormatter();
+            string path = $"{Application.persistentDataPath}/data.explorer";
+            FileStream stream = new FileStream(path, FileMode.Create);
+            Player.PlayerDataSerializable data = new Player.PlayerDataSerializable(playerData);
+            formatter.Serialize(stream, data);
+            stream.Close();
+        }
 
-        PlayerDataSerilizable data = new PlayerDataSerilizable(playerData);
-
-        formatter.Serialize(stream, data);
-        stream.Close();
-    }
-
-    public static PlayerDataSerilizable LoadPlayerData()
-    {
-        string path = $"{Application.persistentDataPath}/data.explorer";
-
-        if(File.Exists(path))
-        {
+        public static Player.PlayerDataSerializable LoadPlayerData() {
+            string path = $"{Application.persistentDataPath}/data.explorer";
+            if(!File.Exists(path)) return null;
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
-
-            PlayerDataSerilizable data = (PlayerDataSerilizable)formatter.Deserialize(stream);
+            Player.PlayerDataSerializable data = (Player.PlayerDataSerializable)formatter.Deserialize(stream);
             stream.Close();
-
             return data;
-        }
-        else
-        {
-            return null;
         }
     }
 }
